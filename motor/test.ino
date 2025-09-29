@@ -7,7 +7,6 @@ void setup() {
   Serial.begin(115200);
   Peripherals_init();
   TB6612FNG_init();
-  Sensors_init();
 
   digitalWrite(PINLED, LOW);
   delay(500);
