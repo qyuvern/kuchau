@@ -7,22 +7,26 @@ static float lastError = 0.0f;
 void setup() {
 	Serial.begin(9600);
   WaitBoton();
-  
 }
 
 void loop() {
 	
-	lastError = PID(lastError); // actualizamos esta shet y la ejecutamos
+	int cal[2];
+	calibracion(cal);
 
-	if (digitalRead(PINBOTON)){
-		beep();
-		delay(500);
-		Motores(0,0);
-		WaitBoton();
+	int b = cal[0];
+	int n = cal[1];
+
+	while(!digitalRead(PINBOTON)){
+		lastError = PID(lastError, b, n); // actualizamos esta shet y la ejecutamos
 	}
-
-
+	
+	beep();
+	Motores(0,0);
+	WaitBoton();
 	
 	//test_sensores();
 	
+	
+	//test_motores();
 }
