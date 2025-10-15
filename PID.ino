@@ -1,18 +1,17 @@
-float PID(float lastError){
-  int b = 50; // antes 505
-  int n = 900; // antes 986
+float PID(float lastError, int b, int n){
   const int pesos[6] = {1, 0.5, 0.2, 0.2, 0.5, 1};
 
   const float Tp = 25.0f;
-  const int ref[6] = {b, b, n, n, b, b};
+  const int ref[6] = {n, n, b, b, n, n};
 	const float Kp = 0.39f, Ki = 0.1f, Kd = 0.01f;
 	
 	// y ahora las variables, como son static esta es la "semilla" y luego cambian :p
 	static float integral = 0.0f;
   static float derivada = 0.0f;
 
-	float error = 0.0f;
-  float sensores[6];
+  static float error = 0.0f;
+
+  int sensores[6];
   lecturaSensores(sensores);
   
   
@@ -27,7 +26,7 @@ float PID(float lastError){
   integral += error;
 	derivada = error - lastError;
 
-  integral = constrain(integral, -1000, 1000);
+  integral = constrain(integral, -100, 100);
 
 	float PID = Kp * error + Ki * integral + Kd * derivada;
 
