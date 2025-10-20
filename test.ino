@@ -20,6 +20,11 @@ void test_motores() {
   WaitBoton();
   Motores(0, 0);
   delay(1000);
+
+  WaitBoton();
+  Motores(50,50);
+  delay(500);
+  Motores(0,0);
 }
 
 void test_sensores(){
