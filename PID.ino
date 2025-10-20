@@ -1,3 +1,48 @@
+float PID(float lastError){
+  const float Tp = 25.0f;
+  const float ref = 0.0f;
+	const float Kp = 0.39f, Ki = 0.0f, Kd = 0.01f;
+	
+	// y ahora las variables, como son static esta es la "semilla" y luego cambian :p
+	static float integral = 0.0f;
+  static float derivada = 0.0f;
+
+  static float error = 0.0f;
+
+  int pos = getPos;
+
+  error = (float)pos - ref;
+
+  integral += error;
+	derivada = error - lastError;
+
+	float PID = Kp * error + Ki * integral + Kd * derivada;
+
+  if (PID > 255) {
+    PID = 255;
+
+  }
+
+  else if (PID < -255) {
+    PID = -255;
+  }
+
+  float izq = Tp+PID;
+  float der = Tp-PID;
+
+  Serial.print("Motores: (");
+  Serial.print(izq);
+  Serial.print(", ");
+  Serial.print(der);
+  Serial.println(")");
+
+
+	//Motores((int)izq, (int)der); // en nuestro código se llama así la función :P
+  return error;
+}
+
+/*
+VIEJO
 float PID(float lastError, int b, int n){
   const int pesos[6] = {1, 0.5, 0.2, 0.2, 0.5, 1};
 
@@ -50,3 +95,4 @@ float PID(float lastError, int b, int n){
   Serial.println(error);
   return error;
 }
+*/
